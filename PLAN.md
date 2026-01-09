@@ -1,9 +1,9 @@
 # Implementation Plan
 
 ## Phase 1: 基础设施
-- [ ] TASK-001: 初始化 Next.js 项目并配置 TypeScript
-- [ ] TASK-002: 配置 Prisma 并连接数据库
-- [ ] TASK-003: 设置 ESLint 和 Prettier
+- [x] TASK-001: 初始化 Next.js 项目并配置 TypeScript
+- [x] TASK-002: 配置 Prisma 并连接数据库
+- [x] TASK-003: 设置 ESLint 和 Prettier
 
 ## Phase 2: 数据模型
 - [ ] TASK-004: 创建 User 数据模型
