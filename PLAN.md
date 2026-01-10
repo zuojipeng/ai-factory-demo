@@ -11,7 +11,7 @@
 
 ## Phase 2: 数据模型
 - [x] TASK-004: 创建 User 数据模型
-- [ ] TASK-005: 创建 Todo 数据模型
+- [x] TASK-005: 创建 Todo 数据模型
 - [ ] TASK-006: 运行数据库迁移
 
 ## Phase 3: 认证系统
