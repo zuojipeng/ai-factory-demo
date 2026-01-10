@@ -1,142 +1,127 @@
-# Codex 任务提交指南
+# Codex Cloud 使用指南
 
-## 分支命名规范
+本项目使用 Codex Cloud 执行 PLAN.md 中的任务。
 
-**所有任务必须遵循以下分支命名格式：**
+## 🎯 快速开始
+
+在 Claude Code CLI 中使用 sdcl-mode skill：
+
+```
+使用 sdcl-mode 执行任务
+```
+
+sdcl-mode 会自动：
+- ✅ 读取 PLAN.md 找到下一个任务
+- ✅ 读取 SPEC.md 获取项目规范
+- ✅ 提交任务到 Codex Cloud
+- ✅ 监控任务完成
+- ✅ 验证并更新状态
+
+## 📋 项目规范文件
+
+### SPEC.md
+定义项目的技术规范，Codex 必须严格遵守：
+- 技术栈要求
+- 代码质量标准
+- 命名规范
+- **分支命名规范**（重要！）
+- API 设计规范
+
+### PLAN.md
+任务清单，格式：
+```markdown
+- [ ] TASK-001: 任务描述
+- [x] TASK-002: 已完成的任务
+```
+
+### .codex-env
+Codex Cloud 环境配置（不提交到 Git）：
+```bash
+CODEX_ENV_ID=your-environment-id
+```
+
+## 🚨 重要规范
+
+### 分支命名（CRITICAL）
+
+**所有 Codex 任务必须使用以下分支格式：**
 
 ```
 feature/task-{TASK_ID}
 ```
 
-其中 `{TASK_ID}` 为三位数字的任务编号（如 004, 007, 015）
+示例：
+- TASK-004 → `feature/task-004`
+- TASK-007 → `feature/task-007`
 
-## 如何使用 Codex 执行 PLAN.md 中的任务
+**注意**：这是强制性要求，验证流程依赖此命名规范。
 
-### 步骤 1: 确定任务编号
-
-查看 `PLAN.md` 找到下一个待执行的任务，例如：
-```
-- [ ] TASK-004: 创建 User 数据模型
-```
-
-### 步骤 2: 准备任务描述
-
-在提交给 Codex 时，**必须明确指定分支名称**。使用以下格式：
+## 📂 项目结构
 
 ```
-请执行 TASK-004：创建 User 数据模型
-
-重要要求：
-1. 必须在分支 feature/task-004 上进行开发
-2. 遵循 SPEC.md 中的所有技术规范
-3. 完成后创建 PR 合并到 main 分支
-
-请参考 PLAN.md 和 SPEC.md 中的要求完成此任务。
+ai-factory-demo/
+├── .codex-env          # Codex 环境配置
+├── SPEC.md             # 项目技术规范
+├── PLAN.md             # 任务清单
+├── CODEX_GUIDE.md      # 本文件
+├── scripts/
+│   ├── validator.sh           # 项目特定验证
+│   └── monitor_cloud_task.sh  # 任务监控（可选）
+└── logs/
+    └── completion.log         # 任务完成记录
 ```
 
-### 步骤 3: 提交到 Codex Cloud
+## 🔧 验证脚本（可选）
+
+### validator.sh
+项目特定的验证逻辑：
 
 ```bash
-# 方法 1: 使用 codex cloud 交互式提交
-codex cloud
-
-# 方法 2: 直接在 Claude Code CLI 中提交任务
-# 输入上面准备好的任务描述
+./scripts/validator.sh <TASK_ID>
 ```
 
-### 步骤 4: 监控任务进度
+功能：
+- TypeScript 类型检查
+- ESLint 检查
+- 任务特定验证（如检查 Prisma schema）
 
-使用监控脚本跟踪任务状态：
+## 💡 最佳实践
 
-```bash
-# 语法：
-./scripts/monitor_cloud_task.sh <TASK_ID> <LOG_FILE>
+1. **保持 SPEC.md 详细且明确**
+   - 列出所有技术约束
+   - 明确禁止的做法
+   - 详细的代码规范
 
-# 示例：
-./scripts/monitor_cloud_task.sh 004 ./logs/task-004.log
-```
+2. **PLAN.md 任务要清晰**
+   - 每个任务独立完整
+   - 描述具体明确
+   - 按依赖关系排序
 
-监控脚本会：
-- 检查分支是否按规范创建（`feature/task-004`）
-- 自动拉取并验证代码
-- 运行本地测试
-- 检查 PR 状态
+3. **让 sdcl-mode 处理自动化**
+   - 不需要手动构建提示词
+   - 不需要手动修正分支
+   - 不需要手动更新 PLAN.md
 
-## 常见问题
+4. **在浏览器查看 Codex 进度**
+   - sdcl-mode 会提供任务 URL
+   - 实时了解代码生成过程
 
-### Q: Codex 创建的分支名称不符合规范怎么办？
+## ❓ 常见问题
 
-**A:** 这是因为任务描述中没有明确要求使用特定分支名。解决方法：
+### Q: Codex 创建的分支名不对怎么办？
 
-1. **在任务描述中明确指定分支名称**（推荐）：
-   ```
-   请在分支 feature/task-004 上完成此任务
-   ```
-
-2. **手动重命名分支**（不推荐）：
-   ```bash
-   git checkout codex/wrong-branch-name
-   git branch -m feature/task-004
-   git push origin feature/task-004
-   git push origin :codex/wrong-branch-name  # 删除远程错误分支
-   ```
+A: sdcl-mode 会自动检测并修正分支名。如果出现问题，检查 SPEC.md 中的分支命名规范是否明确。
 
 ### Q: 如何确保 Codex 遵循项目规范？
 
-**A:** 在任务描述中明确引用规范文档：
+A: 在 SPEC.md 中详细列出所有规范，sdcl-mode 会将 SPEC.md 内容包含在提示词中。
 
-```
-请执行 TASK-XXX：任务描述
+### Q: 本地修改了代码需要手动推送吗？
 
-要求：
-1. 严格遵循 SPEC.md 中定义的所有规范
-2. 在分支 feature/task-XXX 上开发
-3. 参考 PLAN.md 了解任务上下文
-```
+A: 不需要。sdcl-mode 在执行下一个任务前会自动同步本地修改到远程。
 
-### Q: 监控脚本报错"未找到预期分支"怎么办？
+## 📚 相关文档
 
-**A:** 原因是分支命名不符合 `feature/task-{TASK_ID}` 格式。检查：
-
-1. 远程分支名称：
-   ```bash
-   git fetch origin
-   git branch -r | grep task
-   ```
-
-2. 如果分支名称错误，按照上面的方法重命名
-
-## 任务提交模板
-
-为方便使用，这里提供一个标准模板：
-
-```
-请执行 TASK-{TASK_ID}：{任务描述}
-
-分支要求：
-- 必须在分支 feature/task-{TASK_ID} 上进行开发
-
-技术要求：
-- 严格遵循 SPEC.md 中的所有规范
-- 使用 TypeScript strict mode
-- 使用 Tailwind CSS 进行样式设计
-- 确保通过 npm run lint 和 npm run type-check
-
-完成标准：
-- 代码实现符合需求
-- 通过所有代码质量检查
-- 创建 PR 合并到 main 分支
-
-请参考 PLAN.md 和 SPEC.md 完成此任务。
-```
-
-## 验证清单
-
-任务完成后，确保：
-
-- [ ] 分支名称为 `feature/task-{TASK_ID}` 格式
-- [ ] 代码通过 `npm run lint`
-- [ ] 代码通过 `npm run type-check`
-- [ ] 已创建 PR 到 main 分支
-- [ ] PR 中包含任务描述和测试说明
-- [ ] 监控脚本验证通过
+- [SPEC.md](./SPEC.md) - 项目技术规范
+- [PLAN.md](./PLAN.md) - 任务清单
+- Codex Cloud: https://chatgpt.com/codex

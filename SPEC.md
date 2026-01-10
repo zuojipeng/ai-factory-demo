@@ -1,5 +1,56 @@
 # Project Specification
 
+> **⚠️ Codex Cloud 执行规范 - 必读**
+>
+> 如果你是 Codex Cloud 代理在执行任务，请务必阅读并遵守本规范的所有要求。
+
+## 0. Codex Cloud 执行要求
+
+### 🚨 分支命名规范（CRITICAL - 最高优先级）
+
+**强制要求：必须使用以下分支命名格式**
+
+```bash
+git checkout -b feature/task-{TASK_ID}
+```
+
+**示例：**
+- 执行 TASK-004 → 分支名必须是 `feature/task-004`
+- 执行 TASK-007 → 分支名必须是 `feature/task-007`
+- 执行 TASK-015 → 分支名必须是 `feature/task-015`
+
+**重要说明：**
+- ❌ 不能使用 `codex/` 前缀
+- ❌ 不能自己创造分支名
+- ❌ 不能使用任务描述作为分支名
+- ✅ 必须严格使用 `feature/task-{TASK_ID}` 格式
+- ✅ TASK_ID 使用三位数字（如 004, 007, 015）
+
+**执行流程：**
+1. 开始工作前，先创建并切换到正确的分支
+2. 在该分支上完成所有开发工作
+3. 提交代码到该分支
+4. 推送到远程仓库
+
+### 提交信息规范
+
+```
+Complete TASK-{TASK_ID}: {任务描述}
+```
+
+示例：
+```
+Complete TASK-004: 创建 User 数据模型
+```
+
+### 工作流程
+
+1. **创建分支**：`git checkout -b feature/task-{TASK_ID}`
+2. **开发代码**：按照下面的技术规范完成任务
+3. **运行检查**：确保通过 `npm run lint` 和 `npm run type-check`
+4. **提交代码**：使用规范的提交信息
+5. **推送远程**：`git push -u origin feature/task-{TASK_ID}`
+
 ## 1. 技术栈约束
 
 ### 必须使用
@@ -67,22 +118,7 @@ src/
 - 401: 未授权
 - 500: 服务器错误
 
-## 5. Git 分支规范
-
-### 分支命名约定
-- **格式**: `feature/task-{TASK_ID}`
-- **示例**:
-  - TASK-004 → `feature/task-004`
-  - TASK-007 → `feature/task-007`
-  - TASK-015 → `feature/task-015`
-
-### 分支创建规则
-- [ ] 每个任务必须在独立分支上开发
-- [ ] 分支名必须严格遵循 `feature/task-{TASK_ID}` 格式
-- [ ] 任务 ID 使用三位数字（如 004, 007, 015）
-- [ ] 完成后通过 PR 合并到 main 分支
-
-## 6. 测试要求
+## 5. 测试要求
 
 每个 API 必须包含：
 - [ ] 正常流程测试

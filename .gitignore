@@ -5,3 +5,7 @@ node_modules/
 .env
 
 .codex-env
+
+# Build
+tsconfig.tsbuildinfo
+*.tsbuildinfo
