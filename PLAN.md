@@ -1,5 +1,9 @@
 # Implementation Plan
 
+> **分支命名规范**: 所有任务必须在 `feature/task-{TASK_ID}` 格式的分支上开发
+>
+> 示例：TASK-004 → `feature/task-004`
+
 ## Phase 1: 基础设施
 - [x] TASK-001: 初始化 Next.js 项目并配置 TypeScript
 - [x] TASK-002: 配置 Prisma 并连接数据库
