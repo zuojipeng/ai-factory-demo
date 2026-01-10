@@ -23,15 +23,15 @@ echo -e "${BLUE}=========================================${NC}"
 echo -e "${BLUE}开始监听云端任务: TASK-${TASK_ID}${NC}"
 echo -e "${BLUE}=========================================${NC}"
 
-# 从日志文件提取 Codex Cloud Task URL
-TASK_URL=$(grep -oP 'https://chatgpt\.com/codex/tasks/[a-zA-Z0-9_-]+' "$LOG_FILE" | head -1)
+# 从日志文件提取 Codex Cloud Task URL (macOS 兼容版本)
+TASK_URL=$(grep -o 'https://chatgpt\.com/codex/tasks/[a-zA-Z0-9_-]*' "$LOG_FILE" | head -1)
 
 if [ -z "$TASK_URL" ]; then
     echo -e "${RED}❌ 无法从日志中提取任务 URL${NC}"
     exit 1
 fi
 
-CLOUD_TASK_ID=$(echo "$TASK_URL" | grep -oP 'tasks/\K[a-zA-Z0-9_-]+')
+CLOUD_TASK_ID=$(echo "$TASK_URL" | sed -n 's/.*tasks\/\([a-zA-Z0-9_-]*\).*/\1/p')
 
 echo -e "${GREEN}📊 任务 URL: ${TASK_URL}${NC}"
 echo -e "${YELLOW}💡 你可以在浏览器实时查看进度${NC}"

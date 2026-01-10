@@ -1,6 +1,7 @@
 # Dependencies
 logs/
 node_modules/
-*.logs
+*.log
+.env
 
 .codex-env
