@@ -10,7 +10,7 @@
 - [x] TASK-003: 设置 ESLint 和 Prettier
 
 ## Phase 2: 数据模型
-- [ ] TASK-004: 创建 User 数据模型
+- [x] TASK-004: 创建 User 数据模型
 - [ ] TASK-005: 创建 Todo 数据模型
 - [ ] TASK-006: 运行数据库迁移
 
