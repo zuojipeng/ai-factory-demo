@@ -16,7 +16,7 @@
 
 ## Phase 3: 认证系统
 - [x] TASK-007: 实现用户注册 API
-- [ ] TASK-008: 实现用户登录 API
+- [x] TASK-008: 实现用户登录 API
 - [ ] TASK-009: 实现 JWT 认证中间件
 
 ## Phase 4: Todo 功能
