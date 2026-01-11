@@ -20,7 +20,7 @@
 - [x] TASK-009: 实现 JWT 认证中间件
 
 ## Phase 4: Todo 功能
-- [ ] TASK-010: 实现创建 Todo API
+- [x] TASK-010: 实现创建 Todo API
 - [ ] TASK-011: 实现获取 Todo 列表 API
 - [ ] TASK-012: 实现更新 Todo API
 - [ ] TASK-013: 实现删除 Todo API
