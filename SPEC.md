@@ -23,15 +23,16 @@ if [ -z "$GITHUB_TOKEN" ]; then
     exit 1
 fi
 
-# 配置 Git 使用 token（避免交互式认证）
+# 配置 Git credential helper（推荐方式）
 git config --global credential.helper store
+echo "https://${GITHUB_TOKEN}:x-oauth-basic@github.com" > ~/.git-credentials
 
 # 检查是否已配置远程仓库
 git remote -v
 
-# 如果为空，则配置远程仓库（使用 HTTPS + Token）
+# 如果为空，则配置远程仓库（使用普通 HTTPS URL）
 if [ -z "$(git remote)" ]; then
-    git remote add origin https://${GITHUB_TOKEN}@github.com/zuojipeng/ai-factory-demo.git
+    git remote add origin https://github.com/zuojipeng/ai-factory-demo.git
 fi
 ```
 
@@ -86,14 +87,15 @@ Complete TASK-004: 创建 User 数据模型
        exit 1
    fi
 
-   # 配置 Git credential helper
+   # 配置 Git credential helper（推荐方式）
    git config --global credential.helper store
+   echo "https://${GITHUB_TOKEN}:x-oauth-basic@github.com" > ~/.git-credentials
 
    # 检查远程仓库配置
    git remote -v
-   # 如果为空，则添加远程仓库（使用 HTTPS + Token）
+   # 如果为空，则添加远程仓库（使用普通 HTTPS URL）
    if [ -z "$(git remote)" ]; then
-       git remote add origin https://${GITHUB_TOKEN}@github.com/zuojipeng/ai-factory-demo.git
+       git remote add origin https://github.com/zuojipeng/ai-factory-demo.git
    fi
    ```
 6. **推送远程**：`git push -u origin feature/task-{TASK_ID}`
