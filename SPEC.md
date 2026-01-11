@@ -8,19 +8,31 @@
 
 ### 📦 项目仓库配置
 
-**仓库地址**：`git@github.com:zuojipeng/ai-factory-demo.git`
+**仓库地址**：`https://github.com/zuojipeng/ai-factory-demo.git`
 
 **重要**：在推送代码前，必须确保已配置远程仓库。执行以下命令检查并配置：
 
 ```bash
-# 添加 GitHub 到 known_hosts（避免首次连接提示）
-ssh-keyscan github.com >> ~/.ssh/known_hosts 2>/dev/null
+# GITHUB_TOKEN 应该已在 Codex Cloud 环境变量中配置
+# 如果没有，请联系管理员配置环境变量: GITHUB_TOKEN=ghp_xxxxx
+
+# 检查 token 是否存在
+if [ -z "$GITHUB_TOKEN" ]; then
+    echo "❌ 错误：未找到 GITHUB_TOKEN 环境变量"
+    echo "请在 Codex Cloud Environment Settings 中配置"
+    exit 1
+fi
+
+# 配置 Git 使用 token（避免交互式认证）
+git config --global credential.helper store
 
 # 检查是否已配置远程仓库
 git remote -v
 
-# 如果为空，则配置远程仓库（使用 SSH 协议）
-git remote add origin git@github.com:zuojipeng/ai-factory-demo.git
+# 如果为空，则配置远程仓库（使用 HTTPS + Token）
+if [ -z "$(git remote)" ]; then
+    git remote add origin https://${GITHUB_TOKEN}@github.com/zuojipeng/ai-factory-demo.git
+fi
 ```
 
 ### 🚨 分支命名规范（CRITICAL - 最高优先级）
@@ -68,13 +80,21 @@ Complete TASK-004: 创建 User 数据模型
 4. **提交代码**：使用规范的提交信息
 5. **配置远程**（如需要）：
    ```bash
-   # 添加 GitHub 到 known_hosts
-   ssh-keyscan github.com >> ~/.ssh/known_hosts 2>/dev/null
+   # 检查 GITHUB_TOKEN 环境变量
+   if [ -z "$GITHUB_TOKEN" ]; then
+       echo "❌ 未找到 GITHUB_TOKEN 环境变量"
+       exit 1
+   fi
+
+   # 配置 Git credential helper
+   git config --global credential.helper store
 
    # 检查远程仓库配置
    git remote -v
-   # 如果为空，则添加远程仓库（使用 SSH 协议）
-   git remote add origin git@github.com:zuojipeng/ai-factory-demo.git
+   # 如果为空，则添加远程仓库（使用 HTTPS + Token）
+   if [ -z "$(git remote)" ]; then
+       git remote add origin https://${GITHUB_TOKEN}@github.com/zuojipeng/ai-factory-demo.git
+   fi
    ```
 6. **推送远程**：`git push -u origin feature/task-{TASK_ID}`
 
