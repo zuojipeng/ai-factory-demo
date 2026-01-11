@@ -6,6 +6,20 @@
 
 ## 0. Codex Cloud 执行要求
 
+### 📦 项目仓库配置
+
+**仓库地址**：`https://github.com/zuojipeng/ai-factory-demo.git`
+
+**重要**：在推送代码前，必须确保已配置远程仓库。执行以下命令检查并配置：
+
+```bash
+# 检查是否已配置远程仓库
+git remote -v
+
+# 如果为空，则配置远程仓库
+git remote add origin https://github.com/zuojipeng/ai-factory-demo.git
+```
+
 ### 🚨 分支命名规范（CRITICAL - 最高优先级）
 
 **强制要求：必须使用以下分支命名格式**
@@ -49,7 +63,14 @@ Complete TASK-004: 创建 User 数据模型
 2. **开发代码**：按照下面的技术规范完成任务
 3. **运行检查**：确保通过 `npm run lint` 和 `npm run type-check`
 4. **提交代码**：使用规范的提交信息
-5. **推送远程**：`git push -u origin feature/task-{TASK_ID}`
+5. **配置远程**（如需要）：
+   ```bash
+   # 检查远程仓库配置
+   git remote -v
+   # 如果为空，则添加远程仓库
+   git remote add origin https://github.com/zuojipeng/ai-factory-demo.git
+   ```
+6. **推送远程**：`git push -u origin feature/task-{TASK_ID}`
 
 ## 1. 技术栈约束
 
